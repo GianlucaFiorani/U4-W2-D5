@@ -1,12 +1,14 @@
 package gianlucafiorani.entities;
 
+import gianlucafiorani.exceptions.OutOfRangeException;
+
 public class BoardGame extends Game {
     private int playerNum;
     private int duration;
 
     public BoardGame(String title, int relaceDate, double price, int playerNum, int duration) {
         super(title, relaceDate, price);
-        if (playerNum > 10 || playerNum < 1) throw new RuntimeException("errore");
+        if (playerNum > 10 || playerNum < 1) throw new OutOfRangeException();
         else {
             this.playerNum = playerNum;
             this.duration = duration;
@@ -18,7 +20,7 @@ public class BoardGame extends Game {
     }
 
     public void setPlayerNum(int playerNum) {
-        if (playerNum > 10 || playerNum < 1) throw new RuntimeException("errore");
+        if (playerNum > 10 || playerNum < 1) throw new OutOfRangeException();
         else this.playerNum = playerNum;
     }
 

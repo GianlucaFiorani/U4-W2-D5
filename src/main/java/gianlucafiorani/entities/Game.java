@@ -1,5 +1,7 @@
 package gianlucafiorani.entities;
 
+import gianlucafiorani.exceptions.OutOfRangeException;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Random;
@@ -13,7 +15,7 @@ public abstract class Game {
     private double price;
 
     public Game(String title, int relaceDate, double price) {
-        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new RuntimeException("errore");
+        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new OutOfRangeException();
         else {
             long id;
             while (true) {
@@ -47,7 +49,7 @@ public abstract class Game {
     }
 
     public void setRelaceDate(int relaceDate) {
-        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new RuntimeException("errore");
+        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new OutOfRangeException();
         else this.relaceDate = relaceDate;
     }
 
