@@ -12,10 +12,14 @@ import java.util.Scanner;
 public class Application {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Collection collection = new Collection();
         Game newgame = new VideoGame("GTA", 2010, 15, "ps5", 15, Genre.FPS);
+        Game newgame2 = new BoardGame("GTA", 2010, 15, 3, 15);
+        collection.addGame(newgame);
         collection.addGame(newgame);
         collection.removeGame(newgame.getId());
+
         // createGame(collection);
         try {
             collection.collectionStats();
@@ -85,6 +89,7 @@ public class Application {
                 }
                 default -> System.out.println("Numero non corrispondente alle opzioni");
             }
+            scanner.close();
         } catch (NumberFormatException e) {
             System.out.println("Non hai inserito un numero");
         }

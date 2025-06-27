@@ -1,26 +1,24 @@
 package gianlucafiorani.entities;
 
 import gianlucafiorani.entities.enums.Genre;
+import gianlucafiorani.exceptions.GameAddException;
 import gianlucafiorani.exceptions.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Collection {
-    private final List<Game> collection;
+    private final Set<Game> collection;
 
     public Collection() {
-        this.collection = new ArrayList<>();
+        this.collection = new HashSet<>();
     }
 
     public void addGame(Game game) {
-        this.collection.add(game);
+        if (!this.collection.add(game)) throw new GameAddException();
     }
 
     public void addGame(List<Game> game) {
-        this.collection.addAll(game);
+        if (!this.collection.addAll(game)) throw new GameAddException();
     }
 
     public void removeGame(long id) {
@@ -31,7 +29,7 @@ public class Collection {
     public Game getGame(long id) {
         List<Game> result = this.collection.stream().filter(game -> game.getId() == id).toList();
         if (result.isEmpty()) {
-            throw new RuntimeException("Non trovato");
+            throw new NotFoundException();
         } else return result.getFirst();
     }
 
@@ -160,7 +158,7 @@ public class Collection {
     public void collectionStats() {
         int videoGameNum = this.collection.stream().filter(game -> game instanceof VideoGame).toList().size();
         DoubleSummaryStatistics stats = this.collection.stream().mapToDouble(game -> game.getPrice()).summaryStatistics();
-        Game mostExpensiveGame = searchByPrice(stats.getMax() + 0.1).reversed().getFirst();
+        Game mostExpensiveGame = searchByPrice(stats.getMax() + 0.001).reversed().getFirst();
         System.out.println(
                 " Videogiochi: " + videoGameNum
                         + ", Giochi da tavolo: " + (this.collection.size() - videoGameNum)
