@@ -47,7 +47,8 @@ public abstract class Game {
     }
 
     public void setRelaceDate(int relaceDate) {
-        this.relaceDate = relaceDate;
+        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new RuntimeException("errore");
+        else this.relaceDate = relaceDate;
     }
 
     public double getPrice() {
