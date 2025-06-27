@@ -1,22 +1,31 @@
 package gianlucafiorani.entities;
 
-import java.time.LocalDate;
-
 public class BoardGame extends Game {
-    private final int playerNum;
-    private final int duration;
+    private int playerNum;
+    private int duration;
 
-    public BoardGame(String title, LocalDate relaceDate, double price, int playerNum, int duration) {
+    public BoardGame(String title, int relaceDate, double price, int playerNum, int duration) {
         super(title, relaceDate, price);
-        this.playerNum = playerNum;
-        this.duration = duration;
+        if (playerNum > 10 || playerNum < 1) throw new RuntimeException("errore");
+        else {
+            this.playerNum = playerNum;
+            this.duration = duration;
+        }
     }
 
     public int getPlayerNum() {
         return playerNum;
     }
 
+    public void setPlayerNum(int playerNum) {
+        this.playerNum = playerNum;
+    }
+
     public int getDuration() {
         return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

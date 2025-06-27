@@ -2,15 +2,13 @@ package gianlucafiorani.entities;
 
 import gianlucafiorani.entities.enums.Genre;
 
-import java.time.LocalDate;
-
 public class VideoGame extends Game {
-    private final String platform;
-    private final int duration;
-    private final Genre genre;
+    private String platform;
+    private int duration;
+    private Genre genre;
 
 
-    public VideoGame(String title, LocalDate relaceDate, double price, String platform, int duration, Genre genre) {
+    public VideoGame(String title, int relaceDate, double price, String platform, int duration, Genre genre) {
         super(title, relaceDate, price);
         this.platform = platform;
         this.duration = duration;
@@ -21,11 +19,23 @@ public class VideoGame extends Game {
         return platform;
     }
 
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
     public int getDuration() {
         return duration;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public Genre getGenre() {
         return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 }

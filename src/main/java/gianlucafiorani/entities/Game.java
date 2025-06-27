@@ -1,20 +1,33 @@
 package gianlucafiorani.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
-public class Game {
-    protected final long id;
-    protected final String title;
-    protected final LocalDate relaceDate;
-    protected double price;
+public abstract class Game {
+    private final long id;
+    private final Set<Long> idList = new HashSet<>();
+    private String title;
+    private int relaceDate;
+    private double price;
 
-    public Game(String title, LocalDate relaceDate, double price) {
-        Random rnd = new Random();
-        this.id = rnd.nextLong();
-        this.title = title;
-        this.relaceDate = relaceDate;
-        this.price = price;
+    public Game(String title, int relaceDate, double price) {
+        if (relaceDate < 1900 || relaceDate > LocalDate.now().getYear()) throw new RuntimeException("errore");
+        else {
+            long id;
+            while (true) {
+                Random rnd = new Random();
+                id = rnd.nextLong();
+                if (idList.add(id)) {
+                    break;
+                }
+            }
+            this.id = id;
+            this.title = title;
+            this.relaceDate = relaceDate;
+            this.price = price;
+        }
     }
 
     public long getId() {
@@ -25,8 +38,16 @@ public class Game {
         return title;
     }
 
-    public LocalDate getRelaceDate() {
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getRelaceDate() {
         return relaceDate;
+    }
+
+    public void setRelaceDate(int relaceDate) {
+        this.relaceDate = relaceDate;
     }
 
     public double getPrice() {
