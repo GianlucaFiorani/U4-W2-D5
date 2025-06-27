@@ -5,6 +5,7 @@ import gianlucafiorani.entities.Collection;
 import gianlucafiorani.entities.Game;
 import gianlucafiorani.entities.VideoGame;
 import gianlucafiorani.entities.enums.Genre;
+import gianlucafiorani.exceptions.NotFoundException;
 
 import java.util.Scanner;
 
@@ -12,9 +13,17 @@ public class Application {
 
     public static void main(String[] args) {
         Collection collection = new Collection();
-        Game newgame = new VideoGame("bubba", 1700, 15, "ps5", 15, Genre.FPS);
+        Game newgame = new VideoGame("GTA", 2010, 15, "ps5", 15, Genre.FPS);
         collection.addGame(newgame);
-        collection.collectionStats();
+        collection.removeGame(newgame.getId());
+        // createGame(collection);
+        try {
+            collection.collectionStats();
+        } catch (NotFoundException e) {
+            System.out.println("Collezione vuota");
+        }
+// troppo lungo da implementare in cosi poco tempo
+
     }
 
     public static void createGame(Collection collection) {

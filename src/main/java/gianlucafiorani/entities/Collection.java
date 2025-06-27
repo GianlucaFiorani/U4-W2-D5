@@ -1,6 +1,7 @@
 package gianlucafiorani.entities;
 
 import gianlucafiorani.entities.enums.Genre;
+import gianlucafiorani.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
@@ -145,25 +146,26 @@ public class Collection {
     public List<Game> searchByPrice(double price) {
         List<Game> result = this.collection.stream().filter(game -> game.getPrice() < price).toList();
         if (result.isEmpty()) {
-            throw new RuntimeException("Non trovato");
+            throw new NotFoundException();
         } else return result;
     }
 
     public List<Game> searchByPlayerNum(int playerNum) {
         List<Game> result = this.collection.stream().filter(game -> game instanceof BoardGame && ((BoardGame) game).getPlayerNum() < playerNum).toList();
         if (result.isEmpty()) {
-            throw new RuntimeException("Non trovato");
+            throw new NotFoundException();
         } else return result;
     }
 
     public void collectionStats() {
         int videoGameNum = this.collection.stream().filter(game -> game instanceof VideoGame).toList().size();
         DoubleSummaryStatistics stats = this.collection.stream().mapToDouble(game -> game.getPrice()).summaryStatistics();
+        Game mostExpensiveGame = searchByPrice(stats.getMax() + 0.1).reversed().getFirst();
         System.out.println(
                 " Videogiochi: " + videoGameNum
-                        + " Giochi da tavolo: " + (this.collection.size() - videoGameNum)
-                        + " Gioco con il prezzo più alto: " + stats.getMax()
-                        + " Media dei prezzi: " + stats.getAverage());
+                        + ", Giochi da tavolo: " + (this.collection.size() - videoGameNum)
+                        + ", Gioco con il prezzo più alto: " + mostExpensiveGame.getTitle() + " " + stats.getMax() + " €"
+                        + ", Media dei prezzi: " + stats.getAverage() + " €");
     }
 
 }

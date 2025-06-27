@@ -18,7 +18,8 @@ public class BoardGame extends Game {
     }
 
     public void setPlayerNum(int playerNum) {
-        this.playerNum = playerNum;
+        if (playerNum > 10 || playerNum < 1) throw new RuntimeException("errore");
+        else this.playerNum = playerNum;
     }
 
     public int getDuration() {
